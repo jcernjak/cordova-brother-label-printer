@@ -47,7 +47,7 @@ import com.brother.ptouch.sdk.PrinterStatus;
 
 public class BrotherPrinter extends CordovaPlugin {
 
-    String modelName = "QL-720NW";
+    String modelName = "QL-810W";
     private NetPrinter[] netPrinters;
 
     private String ipAddress   = null;
@@ -194,7 +194,7 @@ public class BrotherPrinter extends CordovaPlugin {
 
                     myPrinterInfo = myPrinter.getPrinterInfo();
 
-                    myPrinterInfo.printerModel  = PrinterInfo.Model.QL_720NW;
+                    myPrinterInfo.printerModel  = PrinterInfo.Model.QL_810W;
                     myPrinterInfo.port          = PrinterInfo.Port.NET;
                     myPrinterInfo.printMode     = PrinterInfo.PrintMode.ORIGINAL;
                     myPrinterInfo.orientation   = PrinterInfo.Orientation.PORTRAIT;
@@ -202,25 +202,23 @@ public class BrotherPrinter extends CordovaPlugin {
                     myPrinterInfo.ipAddress     = ipAddress;
                     myPrinterInfo.macAddress    = macAddress;
 
+                    myPrinterInfo.labelNameIndex  = LabelInfo.QL700.valueOf("W29H90").ordinal();
+                    myPrinterInfo.isAutoCut       = true;
+                    myPrinterInfo.isCutAtEnd      = true;
+                    myPrinterInfo.isHalfCut       = false;
+                    myPrinterInfo.isSpecialTape   = false;
+
                     myPrinter.setPrinterInfo(myPrinterInfo);
-
-                    LabelInfo myLabelInfo = new LabelInfo();
-
-                    myLabelInfo.labelNameIndex  = myPrinter.checkLabelInPrinter();
-                    myLabelInfo.isAutoCut       = true;
-                    myLabelInfo.isEndCut        = true;
-                    myLabelInfo.isHalfCut       = false;
-                    myLabelInfo.isSpecialTape   = false;
-
-                    //label info must be set after setPrinterInfo, it's not in the docs
-                    myPrinter.setLabelInfo(myLabelInfo);
 
                     String labelWidth = ""+myPrinter.getLabelParam().labelWidth;
                     String paperWidth = ""+myPrinter.getLabelParam().paperWidth;
+
                     Log.d(TAG, "paperWidth = " + paperWidth);
                     Log.d(TAG, "labelWidth = " + labelWidth);
-                    
+
+                    myPrinter.startCommunication();
                     PrinterStatus status = myPrinter.printImage(bitmap);
+                    myPrinter.endCommunication();
 
                     //casting to string doesn't work, but this does... wtf Brother
                     String status_code = ""+status.errorCode;
