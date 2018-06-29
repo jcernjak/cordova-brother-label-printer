@@ -202,7 +202,7 @@ public class BrotherPrinter extends CordovaPlugin {
                     myPrinterInfo.ipAddress     = ipAddress;
                     myPrinterInfo.macAddress    = macAddress;
 
-                    myPrinterInfo.labelNameIndex  = LabelInfo.QL700.valueOf("W29H90").ordinal();
+                    myPrinterInfo.labelNameIndex  = LabelInfo.QL700.valueOf("W29").ordinal();
                     myPrinterInfo.isAutoCut       = true;
                     myPrinterInfo.isCutAtEnd      = true;
                     myPrinterInfo.isHalfCut       = false;
